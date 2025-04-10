@@ -1,0 +1,190 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    margin: 20px 0;
+}
+
+.game-container {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px; /* 增大格子之间的间距 */
+    width: 80%; /* 增大游戏容器宽度 */
+    max-width: 700px; /* 增大最大宽度 */
+    margin: 0 auto; /* 居中容器 */
+    border: 2px solid #ccc;
+    padding: 20px; /* 增大内边距 */
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.3); /* 添加背景透明度 */
+    border-radius: 15px; /* 增大圆角 */
+}
+
+.tile {
+    padding: 20px; /* 增大格子内填充 */
+    background: rgba(255, 255, 255, 0.4); /* 调整背景透明度 */
+    backdrop-filter: blur(10px);
+    border: 1px solid #ccc;
+    border-radius: 8px; /* 增大圆角 */
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px; /* 稍微减小字体 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1 / 1;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tile:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+    background-color: #d0f0d0;
+}
+
+.tile.hidden {
+    animation: shrink 0.5s ease-in-out forwards;
+}
+
+@keyframes shrink {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+#start-button, #restart-button {
+    padding: 15px 30px; /* 增大按钮尺寸 */
+    font-size: 18px; /* 保持按钮字体大小 */
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#game-over {
+    display: none;
+    margin-top: 50px;
+}
+
+@media (max-width: 480px) {
+    .game-container {
+        width: 95%;
+        gap: 10px; /* 调整小屏幕格子间距 */
+        padding: 10px;
+    }
+
+    .tile {
+        font-size: 12px; /* 调整小屏幕字体大小 */
+        padding: 15px; /* 调整小屏幕格子内填充 */
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .game-container {
+        width: 85%;
+        max-width: 600px;
+        gap: 12px; /* 调整中屏幕格子间距 */
+        padding: 15px;
+    }
+
+    .tile {
+        font-size: 13px; /* 调整中屏幕字体大小 */
+        padding: 18px; /* 调整中屏幕格子内填充 */
+    }
+}
+
+.tile.shake {
+    animation: shake 0.5s;
+    animation-iteration-count: 1;
+}
+
+@keyframes shake {
+    0% {
+        transform: translate(1px, 1px) rotate(0deg);
+    }
+    10% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+    }
+    20% {
+        transform: translate(-3px, 0px) rotate(1deg);
+    }
+    30% {
+        transform: translate(3px, 2px) rotate(0deg);
+    }
+    40% {
+        transform: translate(1px, -1px) rotate(1deg);
+    }
+    50% {
+        transform: translate(-1px, 2px) rotate(-1deg);
+    }
+    60% {
+        transform: translate(-3px, 1px) rotate(0deg);
+    }
+    70% {
+        transform: translate(3px, 1px) rotate(-1deg);
+    }
+    80% {
+        transform: translate(-1px, -1px) rotate(1deg);
+    }
+    90% {
+        transform: translate(1px, 2px) rotate(0deg);
+    }
+    100% {
+        transform: translate(1px, -2px) rotate(-1deg);
+    }
+}
+
+.tile.fade-out {
+    animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+}
+
+.particle-container {
+    position: absolute;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+    z-index: 1000;
+}
+
+.particle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background-color: #ffcc00;
+    border-radius: 50%;
+    animation: particle-animation 1s ease-out forwards;
+}
+
+@keyframes particle-animation {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(var(--dx, 0) * 50px), calc(var(--dy, 0) * 50px)) scale(0.5);
+        opacity: 0;
+    }
+}
